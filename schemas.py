@@ -6,6 +6,7 @@ class ProductBase(BaseModel):
     productname: str
     price: float
     in_stock: bool = True
+    category: Optional[str] = "General"
 
 class ProductCreate(ProductBase):
     pass
@@ -14,6 +15,7 @@ class ProductUpdate(BaseModel):
     productname: Optional[str] = None
     price: Optional[float] = None
     in_stock: Optional[bool] = None
+    category: Optional[str] = None
 
 class ProductResponse(ProductBase):
     id: int

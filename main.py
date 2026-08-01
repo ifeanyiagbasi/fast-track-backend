@@ -31,7 +31,7 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(title="Production-Grade API", lifespan=lifespan)
 
-# 2. Add CORS Middleware (allowing both localhost and 127.0.0.1)
+# 2. Add CORS Middleware (allowing both localhost, 127.0.0.1 and vercel)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
@@ -116,6 +116,7 @@ async def create_product(
         productname=product.productname,
         price=product.price,
         in_stock=product.in_stock,
+        category=product.category,
     )
     db.add(new_product)
     await db.commit()
@@ -143,6 +144,8 @@ async def update_product(
         product.price = update_data.price
     if update_data.in_stock is not None:
         product.in_stock = update_data.in_stock
+    if update_data.category is not None:
+        product.category = update_data.category
 
     await db.commit()
     await db.refresh(product)

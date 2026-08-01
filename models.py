@@ -9,6 +9,7 @@ class ProductModel(Base):
     productname = Column(String, nullable=False)
     price = Column(Float, nullable=False)
     in_stock = Column(Boolean, default=True)
+    category = Column(String, nullable=True, default="General")
 
 class User(Base):
     __tablename__ = "users"
