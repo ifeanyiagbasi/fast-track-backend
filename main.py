@@ -187,4 +187,11 @@ async def generate_ai_description(request: AIDescriptionRequest):
     return StreamingResponse(
         mock_llm_stream(request.productname, request.price),
         media_type="text/plain",
+        headers={
+            # Direct Render / NGINX reverse proxies NOT to buffer streaming chunks:
+            "X-Accel-Buffering": "no",
+            # Prevent browser & CDN caching of the live stream:
+            "Cache-Control": "no-cache",
+            "Connection": "keep-alive",
+        },
     )
